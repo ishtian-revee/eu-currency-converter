@@ -9,11 +9,12 @@
     <string name="total">Total=</string>
 
     <!--fields-->
-    <string name="country_name">Country Name</string>
-    <string name="country_amount">Country Amount (EURO)</string>
-    <string name="vat_rates">Vat Rates</string>
+    <string name="country_name">Country Name:</string>
+    <string name="currency_amount">Currency Amount (EURO)</string>
+    <string name="vat_rates">Vat rates:</string>
 
     <!--hints-->
+    <string name="hint_enter_amount">Enter amount</string>
 
     <!--vat rates options texts-->
     <string name="vr_standard">standard(21.0%)</string>

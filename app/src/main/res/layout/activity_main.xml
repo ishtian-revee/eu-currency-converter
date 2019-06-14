@@ -5,15 +5,269 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.activities.MainActivity">
+        tools:context=".ui.activities.MainActivity"
+        android:background="@color/color_white">
 
     <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Hello World!"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:gravity="center"
+            android:text="@string/heading_app_name"
+            android:textAllCaps="true"
+            android:textColor="@color/color_black"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:fontFamily="sans-serif"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="40dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:id="@+id/txt_heading"/>
+
+    <ScrollView
+            android:id="@+id/scroll_view"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/txt_heading"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/country_name"
+                    android:textColor="@color/color_grey"
+                    android:textStyle="bold"
+                    android:textSize="14sp"
+                    android:fontFamily="sans-serif"
+                    android:id="@+id/txt_country_name"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginStart="16dp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_marginTop="32dp"/>
+
+            <Spinner
+                    android:id="@+id/spinner_country"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_field_border_r5"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:paddingEnd="16dp"
+                    android:paddingStart="16dp"
+                    android:fontFamily="sans-serif"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/txt_country_name"
+                    android:layout_marginStart="12dp"
+                    app:layout_constraintTop_toTopOf="@+id/txt_country_name"
+                    app:layout_constraintBottom_toBottomOf="@+id/txt_country_name"
+                    android:layout_marginEnd="16dp"/>
+
+            <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/currency_amount"
+                    android:textColor="@color/color_grey"
+                    android:textStyle="bold"
+                    android:textSize="14sp"
+                    android:fontFamily="sans-serif"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    android:id="@+id/txt_currency_amount"
+                    app:layout_constraintTop_toBottomOf="@+id/txt_country_name"
+                    app:layout_constraintStart_toStartOf="@+id/txt_country_name"
+                    android:layout_marginTop="16dp"
+                    app:layout_constraintEnd_toEndOf="@+id/spinner_country"/>
+
+            <EditText
+                    android:id="@+id/et_currency_amount"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_field_border_r5"
+                    android:ems="10"
+                    android:fontFamily="sans-serif"
+                    android:inputType="numberDecimal"
+                    android:minWidth="150dp"
+                    android:paddingBottom="10dp"
+                    android:paddingEnd="16dp"
+                    android:paddingStart="16dp"
+                    android:paddingTop="10dp"
+                    android:textColor="@color/color_black"
+                    android:textColorHint="@color/color_grey"
+                    android:textSize="14sp"
+                    app:layout_constraintStart_toStartOf="@+id/txt_currency_amount"
+                    app:layout_constraintEnd_toEndOf="@+id/txt_currency_amount"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintTop_toBottomOf="@+id/txt_currency_amount"/>
+
+            <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/vat_rates"
+                    android:textColor="@color/color_grey"
+                    android:textStyle="bold"
+                    android:textSize="14sp"
+                    android:fontFamily="sans-serif"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    android:id="@+id/txt_vat_rates"
+                    app:layout_constraintTop_toBottomOf="@+id/et_currency_amount"
+                    app:layout_constraintStart_toStartOf="@+id/et_currency_amount"
+                    android:layout_marginTop="20dp"
+                    app:layout_constraintEnd_toEndOf="@+id/et_currency_amount"/>
+
+            <RadioGroup
+                    android:id="@+id/radio_group"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:orientation="vertical"
+                    app:layout_constraintEnd_toEndOf="@+id/txt_vat_rates"
+                    app:layout_constraintStart_toStartOf="@+id/txt_vat_rates"
+                    app:layout_constraintTop_toBottomOf="@+id/txt_vat_rates">
+
+                <RadioButton
+                        android:id="@+id/rbtn1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif"
+                        android:text="@string/vr_standard"
+                        android:textColor="@color/color_black"
+                        android:textSize="14sp"
+                        android:checked="true"/>
+
+                <RadioButton
+                        android:id="@+id/rbtn2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif"
+                        android:text="@string/vr_super_reduced"
+                        android:textColor="@color/color_black"
+                        android:textSize="14sp"/>
+
+                <RadioButton
+                        android:id="@+id/rbtn3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif"
+                        android:text="@string/vr_reduced"
+                        android:textColor="@color/color_black"
+                        android:textSize="14sp"/>
+            </RadioGroup>
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/original_amount"
+                    android:textColor="@color/color_grey"
+                    android:textSize="14sp"
+                    android:fontFamily="sans-serif"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    android:id="@+id/txt_original_amount"
+                    app:layout_constraintTop_toBottomOf="@+id/radio_group"
+                    app:layout_constraintStart_toStartOf="@+id/et_currency_amount"
+                    android:layout_marginTop="32dp"/>
+
+            <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:textColor="@color/color_grey"
+                    android:textSize="14sp"
+                    android:fontFamily="sans-serif"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    android:id="@+id/originalAmount"
+                    app:layout_constraintEnd_toEndOf="@+id/radio_group"
+                    app:layout_constraintTop_toTopOf="@+id/txt_original_amount"
+                    app:layout_constraintBottom_toBottomOf="@+id/txt_original_amount"
+                    app:layout_constraintStart_toEndOf="@+id/txt_original_amount" android:layout_marginStart="32dp"/>
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/tax"
+                    android:textColor="@color/color_grey"
+                    android:textSize="14sp"
+                    android:fontFamily="sans-serif"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    android:id="@+id/txt_tax"
+                    app:layout_constraintTop_toBottomOf="@+id/txt_original_amount"
+                    app:layout_constraintStart_toStartOf="@+id/txt_original_amount"
+                    android:layout_marginTop="8dp"/>
+
+            <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:textColor="@color/color_grey"
+                    android:textSize="14sp"
+                    android:fontFamily="sans-serif"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    android:id="@+id/taxAmount"
+                    app:layout_constraintStart_toStartOf="@+id/originalAmount"
+                    app:layout_constraintEnd_toEndOf="@+id/originalAmount"
+                    app:layout_constraintBottom_toBottomOf="@+id/txt_tax"
+                    app:layout_constraintTop_toTopOf="@+id/txt_tax"/>
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/plus_sign"
+                    android:textColor="@color/color_grey"
+                    android:textSize="14sp"
+                    android:fontFamily="sans-serif"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    android:id="@+id/txt_plus_sign"
+                    app:layout_constraintTop_toBottomOf="@+id/txt_tax"
+                    app:layout_constraintStart_toStartOf="@+id/txt_tax"
+                    android:layout_marginTop="8dp"/>
+
+            <View
+                    android:id="@+id/horizontal_line"
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    app:layout_constraintStart_toStartOf="@+id/txt_tax"
+                    app:layout_constraintEnd_toEndOf="@+id/taxAmount"
+                    app:layout_constraintTop_toBottomOf="@+id/txt_plus_sign"
+                    android:background="@color/color_grey"
+                    android:layout_marginTop="8dp"/>
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/total"
+                    android:textColor="@color/color_grey"
+                    android:textSize="14sp"
+                    android:fontFamily="sans-serif"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    android:id="@+id/txt_total"
+                    app:layout_constraintTop_toBottomOf="@+id/horizontal_line"
+                    app:layout_constraintStart_toStartOf="@+id/txt_plus_sign"
+                    android:layout_marginTop="8dp" app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_marginBottom="24dp"/>
+
+            <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:textColor="@color/color_grey"
+                    android:textSize="14sp"
+                    android:fontFamily="sans-serif"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    android:id="@+id/totalAmount"
+                    app:layout_constraintStart_toStartOf="@+id/taxAmount"
+                    app:layout_constraintEnd_toEndOf="@+id/horizontal_line"
+                    app:layout_constraintBottom_toBottomOf="@+id/txt_total"
+                    app:layout_constraintTop_toTopOf="@+id/txt_total"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
