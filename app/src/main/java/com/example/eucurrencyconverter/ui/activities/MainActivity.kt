@@ -7,9 +7,9 @@ import android.text.TextWatcher
 import android.widget.ArrayAdapter
 import com.android.volley.*
 import com.android.volley.toolbox.JsonObjectRequest
-import com.android.volley.toolbox.Volley
 import com.example.eucurrencyconverter.R
 import com.example.eucurrencyconverter.core.Constants
+import com.example.eucurrencyconverter.core.VolleySingleton
 import kotlinx.android.synthetic.main.activity_main.*
 import org.json.JSONObject
 
@@ -24,15 +24,15 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         // method calls
-        getData()
+        getCountryNames()
         initSpinner()
         displayOriginalAmount()
     }
 
     // this method will fetch all the JSON data from the URL
-    private fun getData(){
+    private fun getCountryNames(){
         // creating request
-        val request = object : JsonObjectRequest(Constants.API_METHOD, Constants.API_URL, null,
+        val request = object : JsonObjectRequest(Constants.API_METHOD_GET, Constants.API_URL, null,
             Response.Listener<JSONObject> { response ->
                 // get the root JSON array
                 val jsonArray = response.getJSONArray(Constants.API_ROOT_ENTRY)
@@ -55,9 +55,8 @@ class MainActivity : AppCompatActivity() {
                 return headers
             }
         }
-        // creating request queue and adding the request
-        val mRequestQueue = Volley.newRequestQueue(this)
-        mRequestQueue.add(request)
+        // add the request to the request queue
+        VolleySingleton.getInstance(this).addToRequestQueue(request)
     }
 
     // this method will initialize the spinner with country names
