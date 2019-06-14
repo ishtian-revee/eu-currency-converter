@@ -1,3 +1,23 @@
 <resources>
     <string name="app_name">EuCurrencyConverter</string>
+
+    <!--screen texts-->
+    <string name="heading_app_name">Eu Currency\nConverter</string>
+    <string name="original_amount">Original Amount=</string>
+    <string name="tax">Tax=</string>
+    <string name="plus_sign">(+)</string>
+    <string name="total">Total=</string>
+
+    <!--fields-->
+    <string name="country_name">Country Name</string>
+    <string name="country_amount">Country Amount (EURO)</string>
+    <string name="vat_rates">Vat Rates</string>
+
+    <!--hints-->
+
+    <!--vat rates options texts-->
+    <string name="vr_standard">standard(21.0%)</string>
+    <string name="vr_super_reduced">super_reduced(4.0%)</string>
+    <string name="vr_reduced">reduced(10.0%)</string>
+
 </resources>
