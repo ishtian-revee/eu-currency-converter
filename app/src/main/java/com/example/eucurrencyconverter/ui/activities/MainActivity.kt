@@ -7,11 +7,14 @@ import android.text.TextWatcher
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.android.volley.*
 import com.android.volley.toolbox.JsonObjectRequest
 import com.example.eucurrencyconverter.R
 import com.example.eucurrencyconverter.core.Constants
+import com.example.eucurrencyconverter.core.Eu
 import com.example.eucurrencyconverter.core.VolleySingleton
+import com.example.eucurrencyconverter.ui.adapters.VatRatesAdapter
 import kotlinx.android.synthetic.main.activity_main.*
 import org.json.JSONObject
 
@@ -19,14 +22,13 @@ class MainActivity : AppCompatActivity() {
 
     // Fields ==========================================================================================================
     private var mSelectedCountry = ""
-    private var mCountries = ArrayList<String>()
-    private var mVatRatesName = ArrayList<String>()
-    private var mVatRatesValue = ArrayList<String>()
     // =================================================================================================================
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        recyclerView.layoutManager = LinearLayoutManager(this)
 
         // method calls
         getCountryNames()
@@ -47,7 +49,7 @@ class MainActivity : AppCompatActivity() {
                     val obj = jsonArray.getJSONObject(i)
                     // getting each country name and adding it to the list
                     val countryName = obj.getString("name")
-                    mCountries.add(countryName)
+                    Eu.mCountries.add(countryName)
                 }
             },
             Response.ErrorListener { error ->
@@ -67,8 +69,8 @@ class MainActivity : AppCompatActivity() {
     // this method will fetch the vat rates data of selected country item for spinner
     private fun getVatRatesData(){
         // clearing rray lists
-        mVatRatesName.clear()
-        mVatRatesValue.clear()
+        Eu.mVatRatesName.clear()
+        Eu.mVatRatesValue.clear()
 
         // creating request for fetching vat rates
         val request = object : JsonObjectRequest(Constants.API_METHOD_GET, Constants.API_URL, null,
@@ -98,14 +100,18 @@ class MainActivity : AppCompatActivity() {
                             while (keys.hasNext()){
                                 // get each key names
                                 val key = keys.next().toString()
-                                mVatRatesName.add(key)
+                                Eu.mVatRatesName.add(key)
                                 // get each value
                                 val value = rates.getString(key)
-                                mVatRatesValue.add(value)
+                                Eu.mVatRatesValue.add(value)
+                            }
+                            // make it run on UI thread
+                            runOnUiThread {
+                                recyclerView.adapter = VatRatesAdapter(Eu.mVatRatesName, Eu.mVatRatesValue)
                             }
                             // test
                             if(!mSelectedCountry.equals("Select")){
-                                test_1.text = mVatRatesName[2]
+                                test_1.text = Eu.mVatRatesName[2]
                             }
                         }
                     }else{ break }
@@ -128,9 +134,9 @@ class MainActivity : AppCompatActivity() {
     // this method will initialize the spinner with country names
     private fun initSpinner(){
         // setting first entry as some text
-        mCountries.add("Select")
+        Eu.mCountries.add("Select")
         // create an Array Adapter using a simple sinner layout and languages array
-        val adapter = ArrayAdapter<String>(this, R.layout.spinner_item, mCountries)
+        val adapter = ArrayAdapter<String>(this, R.layout.spinner_item, Eu.mCountries)
         // set layout to use when the list of choices appear
         adapter.setDropDownViewResource(R.layout.spinner_drop_down_item)
         // set the adapter to spinner
