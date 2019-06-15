@@ -3,10 +3,10 @@
 
     <!--screen texts-->
     <string name="heading_app_name">Eu Currency\nConverter</string>
-    <string name="original_amount">Original Amount=</string>
-    <string name="tax">Tax=</string>
+    <string name="original_amount">Original Amount =</string>
+    <string name="tax">Tax =</string>
     <string name="plus_sign">(+)</string>
-    <string name="total">Total=</string>
+    <string name="total">Total =</string>
 
     <!--fields-->
     <string name="country_name">Country Name:</string>
