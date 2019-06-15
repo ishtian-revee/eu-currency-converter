@@ -23,7 +23,7 @@ class VatRatesAdapter(val vatRatesName: ArrayList<String>,
 
     override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
         // organizing radio button text
-        val optionText = vatRatesName.get(position) + " (" + vatRatesValue.get(position) + ")"
+        val optionText = vatRatesName.get(position) + " (" + vatRatesValue.get(position) + "%)"
         // setting the text to radio buttons
         holder.view.vatRateName.text = optionText
     }

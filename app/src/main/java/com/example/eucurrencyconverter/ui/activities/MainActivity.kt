@@ -66,11 +66,23 @@ class MainActivity : AppCompatActivity() {
         VolleySingleton.getInstance(this).addToRequestQueue(request)
     }
 
-    // this method will fetch the vat rates data of selected country item for spinner
-    private fun getVatRatesData(){
-        // clearing rray lists
+    // this method will clear vat rates name list and also vat rates value list
+    private fun clearList(){
+        // clearing array lists
         Eu.mVatRatesName.clear()
         Eu.mVatRatesValue.clear()
+    }
+
+    private fun runThread(){
+        // make it run on UI thread
+        runOnUiThread {
+            recyclerView.adapter = VatRatesAdapter(Eu.mVatRatesName, Eu.mVatRatesValue)
+        }
+    }
+
+    // this method will fetch the vat rates data of selected country item for spinner
+    fun getVatRatesData(){
+        clearList()
 
         // creating request for fetching vat rates
         val request = object : JsonObjectRequest(Constants.API_METHOD_GET, Constants.API_URL, null,
@@ -83,8 +95,11 @@ class MainActivity : AppCompatActivity() {
                     // takes each object
                     val obj = rootArray.getJSONObject(i)
 
-                    // checking with the selected item name
-                    if(obj.get("name").equals(mSelectedCountry)){
+                    // clear list if default text 'Select' is selected in the spinner
+                    if(mSelectedCountry.equals("Select")){
+                        clearList()
+                        runThread()
+                    }else if(obj.get("name").equals(mSelectedCountry)){       // checking with the selected item name
                         // get the periods JSON array
                         val periods = obj.getJSONArray("periods")
 
@@ -105,16 +120,9 @@ class MainActivity : AppCompatActivity() {
                                 val value = rates.getString(key)
                                 Eu.mVatRatesValue.add(value)
                             }
-                            // make it run on UI thread
-                            runOnUiThread {
-                                recyclerView.adapter = VatRatesAdapter(Eu.mVatRatesName, Eu.mVatRatesValue)
-                            }
-                            // test
-                            if(!mSelectedCountry.equals("Select")){
-                                test_1.text = Eu.mVatRatesName[2]
-                            }
                         }
-                    }else{ break }
+                        runThread()
+                    }
                 }
             },
             Response.ErrorListener { error ->
