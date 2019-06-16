@@ -8,10 +8,13 @@ import org.json.JSONObject
 
 class Eu {
     companion object {
+        // Fields ======================================================================================================
         var mCountries = ArrayList<String>()
         var mVatRatesName = ArrayList<String>()
         var mVatRatesValue = ArrayList<String>()
         var mSelectedVat = ""
+
+        // =============================================================================================================
 
         // this method will clear vat rates name list and also vat rates value list
         fun clearList(){

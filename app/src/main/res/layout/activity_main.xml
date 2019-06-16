@@ -149,7 +149,7 @@
             <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="0"
+                    android:text="0.0"
                     android:textColor="@color/color_grey"
                     android:textSize="14sp"
                     android:fontFamily="sans-serif"
@@ -177,7 +177,7 @@
             <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="0"
+                    android:text="0.0"
                     android:textColor="@color/color_grey"
                     android:textSize="14sp"
                     android:fontFamily="sans-serif"
@@ -229,7 +229,7 @@
             <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="0"
+                    android:text="0.0"
                     android:textColor="@color/color_grey"
                     android:textSize="14sp"
                     android:fontFamily="sans-serif"
@@ -239,33 +239,6 @@
                     app:layout_constraintEnd_toEndOf="@+id/horizontal_line"
                     app:layout_constraintBottom_toBottomOf="@+id/txt_total"
                     app:layout_constraintTop_toTopOf="@+id/txt_total"/>
-
-            <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:text="test"
-                    android:textColor="@color/color_grey"
-                    android:textSize="14sp"
-                    android:fontFamily="sans-serif"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    android:id="@+id/test"
-                    app:layout_constraintStart_toStartOf="@+id/totalAmount"
-                    app:layout_constraintEnd_toEndOf="@+id/totalAmount"
-                    app:layout_constraintTop_toBottomOf="@+id/totalAmount"/>
-
-            <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:text="bla"
-                    android:textColor="@color/color_grey"
-                    android:textSize="14sp"
-                    android:fontFamily="sans-serif"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    android:id="@+id/test_1"
-                    app:layout_constraintTop_toBottomOf="@+id/totalAmount"
-                    app:layout_constraintStart_toStartOf="@+id/txt_plus_sign"
-                    android:layout_marginEnd="8dp" app:layout_constraintEnd_toStartOf="@+id/test"
-                    app:layout_constraintBottom_toBottomOf="@+id/test"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

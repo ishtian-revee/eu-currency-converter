@@ -7,11 +7,13 @@ import android.widget.RadioButton
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.eucurrencyconverter.R
+import com.example.eucurrencyconverter.core.Eu
+import com.example.eucurrencyconverter.ui.interfaces.CalculateListener
 import kotlinx.android.synthetic.main.row_vat_rate.view.*
 
 // setting 2 string array list as parameters for both vat rate names and vat rates value
-class VatRatesAdapter(val vatRatesName: ArrayList<String>,
-                      val vatRatesValue: ArrayList<String>): RecyclerView.Adapter<VatRatesAdapter.CustomViewHolder>(){
+class VatRatesAdapter(val listener: CalculateListener, private val vatRatesName: ArrayList<String>,
+                      private val vatRatesValue: ArrayList<String>): RecyclerView.Adapter<VatRatesAdapter.CustomViewHolder>(){
 
     // Fields ==========================================================================================================
     private var mSelectedItem = -1
@@ -36,7 +38,7 @@ class VatRatesAdapter(val vatRatesName: ArrayList<String>,
         // since only one radio button is allowed to be selected, this condition un-checks previous selections
         holder.mRadioButton?.setChecked(mSelectedItem == position)
         // binding items
-        holder.bindItems(vatRatesName[position], position, mSelectedItem)
+        holder.bindItems(position, mSelectedItem)
     }
 
     inner class CustomViewHolder(val view: View): RecyclerView.ViewHolder(view) {
@@ -51,14 +53,16 @@ class VatRatesAdapter(val vatRatesName: ArrayList<String>,
             view.setOnClickListener {
                 mSelectedItem = getAdapterPosition()    // setting current selected item to current adapter position
                 notifyDataSetChanged()                  // notifies that the underlying data has change
-//                Eu.mSelectedVat = mVatRateName.toString().substringAfter("(").substringBefore("%")
+                Eu.mSelectedVat = Eu.mVatRatesValue[mSelectedItem]  // setting the selected items vat rate value
+                listener.calculateTotalAmount()                     // callback
             }
         }
 
-        // test
-        fun bindItems(name: String, position: Int, selectedPosition: Int) {
+        fun bindItems(position: Int, selectedPosition: Int) {
             if((selectedPosition == -1 && position == 0)){
-                view.radioButton.isChecked = true
+                view.radioButton.isChecked = true       // setting first radio button option as selected
+                Eu.mSelectedVat = Eu.mVatRatesValue[0]  // setting selected vat as the first element of vat rates value array
+                listener.calculateTotalAmount()         // callback
             }else{
                 if(selectedPosition == position){
                     view.radioButton.isChecked = true
@@ -68,8 +72,8 @@ class VatRatesAdapter(val vatRatesName: ArrayList<String>,
                     view.radioButton.setOnClickListener {
                         mSelectedItem = getAdapterPosition()    // setting current selected item to current adapter position
                         notifyDataSetChanged()                  // notifies that the underlying data has change
-//                        Eu.mSelectedVat = mVatRateName.toString().substringAfter("(").substringBefore("%")
-                        var temp = mVatRateName.toString()
+                        Eu.mSelectedVat = Eu.mVatRatesValue[mSelectedItem]  // setting the selected items vat rate value
+                        listener.calculateTotalAmount()                     // callback
                     }
                 }
             }

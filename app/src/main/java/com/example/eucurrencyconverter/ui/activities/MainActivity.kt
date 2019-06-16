@@ -15,11 +15,14 @@ import com.example.eucurrencyconverter.core.Constants
 import com.example.eucurrencyconverter.core.Eu
 import com.example.eucurrencyconverter.core.VolleySingleton
 import com.example.eucurrencyconverter.ui.adapters.VatRatesAdapter
+import com.example.eucurrencyconverter.ui.interfaces.CalculateListener
 import kotlinx.android.synthetic.main.activity_main.*
 import org.json.JSONObject
 import java.lang.NumberFormatException
+import java.math.RoundingMode
+import java.text.DecimalFormat
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), CalculateListener {
 
     // Fields ==========================================================================================================
     private var mSelectedCountry = ""
@@ -41,7 +44,7 @@ class MainActivity : AppCompatActivity() {
     private fun runThread(){
         // make it run on UI thread
         runOnUiThread {
-            recyclerView.adapter = VatRatesAdapter(Eu.mVatRatesName, Eu.mVatRatesValue)
+            recyclerView.adapter = VatRatesAdapter(this, Eu.mVatRatesName, Eu.mVatRatesValue)
         }
     }
 
@@ -62,7 +65,15 @@ class MainActivity : AppCompatActivity() {
 
                     // clear list if default text 'Select' is selected in the spinner
                     if(mSelectedCountry.equals("Select")){
+                        // clear all array lists
                         Eu.clearList()
+                        // setting default selected vat value
+                        Eu.mSelectedVat = "0.0"
+
+                        // set default values
+                        originalAmount.text = "0.0"
+                        taxAmount.text = "0.0"
+                        totalAmount.text = "0.0"
                         runThread()
                     }else if(obj.get("name").equals(mSelectedCountry)){       // checking with the selected item name
                         // get the periods JSON array
@@ -120,10 +131,9 @@ class MainActivity : AppCompatActivity() {
             override fun onItemSelected(parent:AdapterView<*>, view: View, position: Int, id: Long){
                 // get the selected item name
                 mSelectedCountry = parent.getItemAtPosition(position).toString()
-                // display the selected item text on test text view
-                test.text = mSelectedCountry
-                // method call
+                // method calls
                 getVatRatesData()
+                calculateTotalAmount()
             }
 
             override fun onNothingSelected(parent: AdapterView<*>){
@@ -153,16 +163,24 @@ class MainActivity : AppCompatActivity() {
     }
 
     // this method will calculate the total amount
-    private fun calculateTotalAmount(){
+    override fun calculateTotalAmount(){
         // calculation of input amount + tax = total amount
         try {
-            val inputValue = originalAmount.text.toString().toFloat()
-            val percent = 4.0   // TODO: get the selected vat rate value
-            val taxValue = (percent*inputValue) / 100.00
+            val inputValue = originalAmount.text.toString().toFloat()   // getting input value as float
+            val percent = Eu.mSelectedVat.toFloat()                     // getting vat percentage value as float
+            val taxValue = (percent*inputValue) / 100.00                // calculating tax value
+
+            // setting values on text views
+            originalAmount.text = inputValue.toString()
             taxAmount.text = taxValue.toString()
-            val totalValue = inputValue + taxValue
-            totalAmount.text = totalValue.toString()
+
+            val totalValue = inputValue + taxValue      // calculating total value
+            val df = DecimalFormat("#.##")      // creating a decimal formatter pattern to 2 decimal places for float
+            df.roundingMode = RoundingMode.CEILING      // setting rounding mode to ceiling
+            val total = df.format(totalValue)           // setting pattern to the final result
+            totalAmount.text = total.toString()         // displaying result value
         } catch(e: NumberFormatException){
+            // setting default values to the text view when user removes value from the edit text
             originalAmount.text = "0.0"
             taxAmount.text = "0.0"
             totalAmount.text = "0.0"
