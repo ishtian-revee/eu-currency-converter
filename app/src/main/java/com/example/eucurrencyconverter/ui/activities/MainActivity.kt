@@ -22,6 +22,7 @@ class MainActivity : AppCompatActivity() {
 
     // Fields ==========================================================================================================
     private var mSelectedCountry = ""
+
     // =================================================================================================================
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,46 +32,9 @@ class MainActivity : AppCompatActivity() {
         recyclerView.layoutManager = LinearLayoutManager(this)
 
         // method calls
-        getCountryNames()
+        Eu.getCountryNames(this)
         initSpinner()
         displayOriginalAmount()
-    }
-
-    // this method will fetch all the JSON data from the URL
-    private fun getCountryNames(){
-        // creating request for fetching country names data
-        val request = object : JsonObjectRequest(Constants.API_METHOD_GET, Constants.API_URL, null,
-            Response.Listener<JSONObject> { response ->
-                // get the root JSON array
-                val jsonArray = response.getJSONArray(Constants.API_ROOT_ENTRY)
-                // loop through each object
-                for(i in 0 until jsonArray.length()){
-                    // takes each object
-                    val obj = jsonArray.getJSONObject(i)
-                    // getting each country name and adding it to the list
-                    val countryName = obj.getString("name")
-                    Eu.mCountries.add(countryName)
-                }
-            },
-            Response.ErrorListener { error ->
-                error.printStackTrace()
-            }) {
-            @Throws(AuthFailureError::class)
-            override fun getHeaders(): Map<String, String> {
-                val headers = HashMap<String, String>()
-                headers.put("Content-Type", "application/json")
-                return headers
-            }
-        }
-        // add the request to the request queue
-        VolleySingleton.getInstance(this).addToRequestQueue(request)
-    }
-
-    // this method will clear vat rates name list and also vat rates value list
-    private fun clearList(){
-        // clearing array lists
-        Eu.mVatRatesName.clear()
-        Eu.mVatRatesValue.clear()
     }
 
     private fun runThread(){
@@ -82,7 +46,7 @@ class MainActivity : AppCompatActivity() {
 
     // this method will fetch the vat rates data of selected country item for spinner
     fun getVatRatesData(){
-        clearList()
+        Eu.clearList()
 
         // creating request for fetching vat rates
         val request = object : JsonObjectRequest(Constants.API_METHOD_GET, Constants.API_URL, null,
@@ -97,7 +61,7 @@ class MainActivity : AppCompatActivity() {
 
                     // clear list if default text 'Select' is selected in the spinner
                     if(mSelectedCountry.equals("Select")){
-                        clearList()
+                        Eu.clearList()
                         runThread()
                     }else if(obj.get("name").equals(mSelectedCountry)){       // checking with the selected item name
                         // get the periods JSON array
@@ -157,7 +121,6 @@ class MainActivity : AppCompatActivity() {
                 mSelectedCountry = parent.getItemAtPosition(position).toString()
                 // display the selected item text on test text view
                 test.text = mSelectedCountry
-
                 // method call
                 getVatRatesData()
             }
