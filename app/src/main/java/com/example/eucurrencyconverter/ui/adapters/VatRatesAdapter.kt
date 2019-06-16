@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.RadioButton
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.eucurrencyconverter.R
 import kotlinx.android.synthetic.main.row_vat_rate.view.*
@@ -41,13 +42,16 @@ class VatRatesAdapter(val vatRatesName: ArrayList<String>,
     inner class CustomViewHolder(val view: View): RecyclerView.ViewHolder(view) {
 
         var mRadioButton: RadioButton? = null
+        var mVatRateName: TextView? = null
 
         init {
             mRadioButton = view.findViewById(R.id.radioButton)      // getting radio button instance from row layout
+            mVatRateName = view.findViewById(R.id.vatRateName)      // getting vat rate name instance from row layout
             // setting on click listener to the radio buttons
             view.setOnClickListener {
                 mSelectedItem = getAdapterPosition()    // setting current selected item to current adapter position
                 notifyDataSetChanged()                  // notifies that the underlying data has change
+//                Eu.mSelectedVat = mVatRateName.toString().substringAfter("(").substringBefore("%")
             }
         }
 
@@ -64,6 +68,8 @@ class VatRatesAdapter(val vatRatesName: ArrayList<String>,
                     view.radioButton.setOnClickListener {
                         mSelectedItem = getAdapterPosition()    // setting current selected item to current adapter position
                         notifyDataSetChanged()                  // notifies that the underlying data has change
+//                        Eu.mSelectedVat = mVatRateName.toString().substringAfter("(").substringBefore("%")
+                        var temp = mVatRateName.toString()
                     }
                 }
             }

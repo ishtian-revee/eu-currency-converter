@@ -17,6 +17,7 @@ import com.example.eucurrencyconverter.core.VolleySingleton
 import com.example.eucurrencyconverter.ui.adapters.VatRatesAdapter
 import kotlinx.android.synthetic.main.activity_main.*
 import org.json.JSONObject
+import java.lang.NumberFormatException
 
 class MainActivity : AppCompatActivity() {
 
@@ -145,13 +146,26 @@ class MainActivity : AppCompatActivity() {
             override fun onTextChanged(s: CharSequence?, p1: Int, p2: Int, p3: Int) {
                 // set the text
                 originalAmount.text = s
-
-                // calculation of input amount + tax = total amount
-                val inputValue = originalAmount.text.toString().toFloat()
-                val taxValue = taxAmount.text.toString().toFloat()
-                val totalValue = inputValue + taxValue
-                totalAmount.text = totalValue.toString()
+                // method call
+                calculateTotalAmount()
             }
         })
+    }
+
+    // this method will calculate the total amount
+    private fun calculateTotalAmount(){
+        // calculation of input amount + tax = total amount
+        try {
+            val inputValue = originalAmount.text.toString().toFloat()
+            val percent = 4.0   // TODO: get the selected vat rate value
+            val taxValue = (percent*inputValue) / 100.00
+            taxAmount.text = taxValue.toString()
+            val totalValue = inputValue + taxValue
+            totalAmount.text = totalValue.toString()
+        } catch(e: NumberFormatException){
+            originalAmount.text = "0.0"
+            taxAmount.text = "0.0"
+            totalAmount.text = "0.0"
+        }
     }
 }
